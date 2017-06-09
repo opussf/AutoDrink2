@@ -1,4 +1,4 @@
-## Interface: 70000
+## Interface: @INTERFACE@
 ## Title: AutoDrink
 ## Notes: All-in-one food and drink button
 ## Version: v1.4
