@@ -1,0 +1,12 @@
+## Interface: 70000
+## Title: AutoDrink
+## Notes: All-in-one food and drink button
+## Version: v1.4
+## Author: Jordon
+## DefaultState: Enabled
+## X-Curse-Packaged-Version: v1.4
+## X-Curse-Project-Name: AutoDrink
+## X-Curse-Project-ID: auto-drink
+## X-Curse-Repository-ID: wow/auto-drink/mainline
+
+AutoDrink.lua
