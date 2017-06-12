@@ -8,6 +8,15 @@ This makes it hard to use with many alts.
 
 This modification creates the new macro in the personal tab.
 
+## How to use
+
+AutoDrink will create a macro called "AutoDrink" in the personal macro tab.
+You will want to modify the macro to list the beverages / food that you want to use in the order that you want to use them in.
+
+The macro can also be updated as you wish, since the addon will never recreate the macro again, unless you delete the macro.
+
+Use the macro as you wish.
+
 ## Bugs / Work arounds / issues
 
 The WoW Macro API is a bit limited.
