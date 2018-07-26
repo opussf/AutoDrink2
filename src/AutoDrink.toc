@@ -1,7 +1,7 @@
 ## Interface: @INTERFACE@
 ## Title: AutoDrink
-## Notes: All-in-one food and drink button
-## Version: v@VERSION@
+## Notes: All-in-one food and drink button v@VERSION@
+## Version: @VERSION@
 ## Author: Jordon, OpusSF
 ## DefaultState: Enabled
 ## X-Curse-Packaged-Version: v1.4
