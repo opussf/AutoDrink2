@@ -49,10 +49,17 @@ end
 
 function AutoDrink:Update()
 	if UnitAffectingCombat("player") or not self.drink then return end
-	if UnitAura("player", "Drink") or UnitAura("player", "Refreshment") then
-		self:SetAttribute("macrotext", "/run AutoDrink:Update()");
+	local isDrinking = false
+	for an=1,40 do
+		local uName = UnitAura( "player", an )
+		if uName == "Drink" or uName == "Refreshment" then  -- @TODO:  Localize this?
+			isDrinking = true
+		end
+	end
+	if isDrinking then
+		self:SetAttribute("macrotext", "/run AutoDrink:Update()")
 	else
-		self:SetAttribute("macrotext", "/run AutoDrink:Update()\n/use " .. self.drink);
+		self:SetAttribute("macrotext", "/run AutoDrink:Update()\n/use " .. self.drink)
 	end
 end
 
