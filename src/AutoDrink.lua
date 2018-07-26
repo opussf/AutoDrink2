@@ -22,7 +22,7 @@ function AutoDrink:PLAYER_ENTERING_WORLD()
 		createdIndex = CreateMacro("AutoDrink", "INV_MISC_QUESTIONMARK", "#showtooltip\n/AutoDrink Conjured Mana Fritter, Conjured Mana Pudding, Ley-Enriched Water, Highmountain Spring Water\n/click AutoDrink", 1)
 		-- CreateMacro("name", icon, "body", perCharacter, isLocal)
 	elseif macroIndex and macroIndex <= 120 then
-		DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99AutoDrink|r: |cffff0000WARNING|r: There macro is set as GLOBAL. Please consider moving to perCharacter")
+		DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99AutoDrink|r: |cffff0000WARNING|r: The macro is set as GLOBAL. Please consider moving to perCharacter")
 	end
 	self:Fetch()
 end
