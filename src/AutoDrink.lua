@@ -43,7 +43,6 @@ function AutoDrink:Fetch()
 			SlashCmdList.AutoDrink(list)
 		end
 		list = string.match(macrotext, "/AutoBuff (.-)\n")
-		print( "AutoBuff list: "..list )
 		if list then
 			SlashCmdList.AutoBuff(list)
 		end
@@ -105,7 +104,7 @@ function AutoDrink:Update()
 			print( "Set the button to use: "..( self.use or "nil" ) )
 			if self.use then
 				self:SetAttribute("macrotext", "/run AutoDrink:Update()\n/use " ..self.use )
-				--SetMacroItem( "AutoDrink", self.use )
+				SetMacroItem( "AutoDrink", self.use )
 			end
 		end
 	end
@@ -114,25 +113,26 @@ end
 AutoDrink:RegisterEvent("BAG_UPDATE")
 function AutoDrink:BAG_UPDATE()
 	print( "BAG_UPDATE" )
+	self.drink = nil
 	for i=1, #AutoDrinks do
 		if GetItemCount(AutoDrinks[i]) > 0 then
 			self.drink = AutoDrinks[i]
 			print( "You have: "..self.drink )
 			if not UnitAffectingCombat("player") then
-				print( "NOt in combat, set icon" )
+				--print( "NOt in combat, set icon" )
 				SetMacroItem("AutoDrink", AutoDrinks[i])
 				self:Update()
 			end
 			break
 		end
 	end
+	self.buff = nil
 	for i=1, #AutoBuffs do
-		print( "DO you have: "..AutoBuffs[i] )
 		if GetItemCount( AutoBuffs[i] ) > 0 then
 			self.buff = AutoBuffs[i]
 			print( "You have buff food: "..self.buff )
 			if not UnitAffectingCombat("player") and not AutoDrink:HasWellFed() then
-				print( "NOT in combat, set icon for buff" )
+				--print( "NOT in combat, set icon for buff" )
 				SetMacroItem( "AutoDrink", AutoBuffs[i] )
 				self:Update()
 			end
@@ -149,4 +149,4 @@ end
 
 -- Refresh macro icon
 LoadAddOn("Blizzard_MacroUI")
-hooksecurefunc("MacroFrame_SaveMacro", function() print( "Macro save"); AutoDrink:Fetch(); AutoDrink:BAG_UPDATE(); end)
+hooksecurefunc("MacroFrame_SaveMacro", function() AutoDrink:Fetch(); AutoDrink:BAG_UPDATE(); end)
