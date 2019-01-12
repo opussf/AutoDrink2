@@ -90,8 +90,6 @@ function AutoDrink:Update()
 		if isDrinking then
 			self:SetAttribute("macrotext", "/run AutoDrink:Update()")
 		else
-			print( "You are not drinking. Set the button to use something." )
-			print( ( self.drink or "nil" ).." or "..( self.buff or "nil" ) )
 --[[
 	if you have the well fed, and you have food, use the food
 	if you are not  well fed, and you have buff, use the buff
@@ -101,7 +99,7 @@ function AutoDrink:Update()
 			self.use = ( AutoDrink:HasWellFed() and self.drink or self.buff ) or
 					self.buff or self.drink
 
-			print( "Set the button to use: "..( self.use or "nil" ) )
+			if AutoDrink.debug then print( "Set the button to use: "..( self.use or "nil" ) ); end
 			if self.use then
 				self:SetAttribute("macrotext", "/run AutoDrink:Update()\n/use " ..self.use )
 				SetMacroItem( "AutoDrink", self.use )
@@ -112,14 +110,11 @@ end
 
 AutoDrink:RegisterEvent("BAG_UPDATE")
 function AutoDrink:BAG_UPDATE()
-	print( "BAG_UPDATE" )
 	self.drink = nil
 	for i=1, #AutoDrinks do
 		if GetItemCount(AutoDrinks[i]) > 0 then
 			self.drink = AutoDrinks[i]
-			print( "You have: "..self.drink )
 			if not UnitAffectingCombat("player") then
-				--print( "NOt in combat, set icon" )
 				SetMacroItem("AutoDrink", AutoDrinks[i])
 				self:Update()
 			end
@@ -130,9 +125,7 @@ function AutoDrink:BAG_UPDATE()
 	for i=1, #AutoBuffs do
 		if GetItemCount( AutoBuffs[i] ) > 0 then
 			self.buff = AutoBuffs[i]
-			print( "You have buff food: "..self.buff )
 			if not UnitAffectingCombat("player") and not AutoDrink:HasWellFed() then
-				--print( "NOT in combat, set icon for buff" )
 				SetMacroItem( "AutoDrink", AutoBuffs[i] )
 				self:Update()
 			end
