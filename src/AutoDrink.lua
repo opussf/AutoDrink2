@@ -49,23 +49,25 @@ function AutoDrink:Fetch()
 	end
 end
 
+function AutoDrink:ListToTable( list, t )
+	for item in string.gmatch( list, '[^,]+' ) do
+		item = item:gsub( '^%s*(.-)%s*$', '%1' )
+		table.insert( t, item )
+	end
+	return t
+end
+
 SLASH_AutoDrink1 = "/AutoDrink"
 function SlashCmdList.AutoDrink(list)
 	AutoDrinks = {}
-	for drink in string.gmatch(list, '[^,]+') do
-		drink = drink:gsub("^%s*(.-)%s*$", "%1")
-	    table.insert(AutoDrinks, drink)
-	end
+	AutoDrinks = AutoDrink:ListToTable( list, AutoDrinks )
 	AutoDrink:BAG_UPDATE()
 end
 
 SLASH_AutoBuff1 = "/AutoBuff"
 function SlashCmdList.AutoBuff( list )
 	AutoBuffs = {}
-	for drink in string.gmatch( list, '[^,]+' ) do
-		drink = drink:gsub( "^%s*(.-)%s*$", "%1" )
-		table.insert( AutoBuffs, drink )
-	end
+	AutoBuffs = AutoDrink:ListToTable( list, AutoBuffs )
 	AutoDrink:BAG_UPDATE()
 end
 
