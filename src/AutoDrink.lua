@@ -29,7 +29,7 @@ function AutoDrink:PLAYER_ENTERING_WORLD()
 	elseif macroIndex and macroIndex <= 120 then
 		DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99AutoDrink|r: |cffff0000WARNING|r: The macro is set as GLOBAL. Copying to your specific macros.")
 		local macroBody = select( 3, GetMacroInfo( "AutoDrink" ) ) -- macro body with \n between lines....
-		createdIdex = CreateMacro( "AutoDrink", "INV_MISC_QUESTIONMARK", macroBody, 1 )  -- 1  makes it personal
+		createdIndex = CreateMacro( "AutoDrink", "INV_MISC_QUESTIONMARK", macroBody, 1 )  -- 1  makes it personal
 	end
 	self:Fetch()
 end
@@ -109,31 +109,22 @@ function AutoDrink:Update()
 		end
 	end
 end
-
+function AutoDrink:ScanBagsFromList( list )
+	-- finds the first item in the list that you have, and updates the macro icon
+	for i = 1, #list do
+		if GetItemCount( list[i] ) > 0 then
+			if not UnitAffectingCombat( "player" ) then
+				SetMacroItem( "AutoDrink", list[i] )
+				self:Update()
+			end
+			return list[i]
+		end
+	end
+end
 AutoDrink:RegisterEvent("BAG_UPDATE")
 function AutoDrink:BAG_UPDATE()
-	self.drink = nil
-	for i=1, #AutoDrinks do
-		if GetItemCount(AutoDrinks[i]) > 0 then
-			self.drink = AutoDrinks[i]
-			if not UnitAffectingCombat("player") then
-				SetMacroItem("AutoDrink", AutoDrinks[i])
-				self:Update()
-			end
-			break
-		end
-	end
-	self.buff = nil
-	for i=1, #AutoBuffs do
-		if GetItemCount( AutoBuffs[i] ) > 0 then
-			self.buff = AutoBuffs[i]
-			if not UnitAffectingCombat("player") and not AutoDrink:HasWellFed() then
-				SetMacroItem( "AutoDrink", AutoBuffs[i] )
-				self:Update()
-			end
-			break
-		end
-	end
+	self.drink = AutoDrink:ScanBagsFromList( AutoDrinks )
+	self.buff  = AutoDrink:ScanBagsFromList( AutoBuffs )
 end
 AutoDrink:RegisterEvent( "UNIT_AURA" )
 function AutoDrink:UNIT_AURA( unit )
