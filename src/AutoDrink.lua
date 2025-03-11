@@ -1,4 +1,3 @@
-
 -- AutoDrink by Jordon
 -- Personalized by OpusSF
 
@@ -134,5 +133,5 @@ function AutoDrink:UNIT_AURA( unit )
 end
 
 -- Refresh macro icon
-LoadAddOn("Blizzard_MacroUI")
+-- LoadAddOn("Blizzard_MacroUI")
 hooksecurefunc("MacroFrame_SaveMacro", function() AutoDrink:Fetch(); AutoDrink:BAG_UPDATE(); end)
